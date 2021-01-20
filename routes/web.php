@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\HomeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +15,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-
-Route::get('{any}', [HomeController::class, 'index'])->where('any', '.*')->name('home');
+Route::any('/{any?}', [HomeController::class, 'index'])->where('any', '.*')->name('home');
