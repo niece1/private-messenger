@@ -1,25 +1,39 @@
 <template>
-    <div>
-        <p class="ft">Hj</p>
-        <Navigation />
-        <router-view />
+    <div class='root'>
+        <nav>
+            <Navbar/>
+        </nav>
+        <aside>
+            <Sidebar/>
+        </aside>
+        <main>
+            <Chat/>
+        </main>
     </div>
 </template>
 
 <script>
-import Navigation from './Navigation.vue'
-    export default {
-        name: "App",
-        components: {
-            Navigation
-        }
+import Navbar from './Navbar.vue'
+import Sidebar from './Sidebar.vue'
+import Chat from './Chat.vue'
+
+export default {
+    name: 'App',
+    components: {
+        Navbar,
+        Sidebar,
+        Chat
     }
+}
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
+.root {
+    width: 100%;
 
-p.ft {
-    color: red;
+    display: flex;
+    flex-wrap: wrap;
 }
+
 
 </style>
