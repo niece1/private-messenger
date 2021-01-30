@@ -1,8 +1,5 @@
 <template>
-    <div>
-<p>Nav</p>
-
-</div>
+    <div>Login</div>
 </template>
 
 <script>
@@ -11,6 +8,5 @@
     }
 </script>
 
-<style lang="scss" scoped>
-
+<style lang='scss' scoped>
 </style>
