@@ -1,3 +1,8 @@
+/* Fonts */
+@font-face {
+  font-family: "Open Sans";
+  src: url(/fonts/Inter-Regular.ttf?9cd7588f47651215d52f3cec8c6f4a44) format("truetype");
+}
 /* General styles */
 * {
   box-sizing: border-box;
@@ -6,7 +11,7 @@
 }
 
 html {
-  font-family: "Open Sans", sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 10px;
 }
 
