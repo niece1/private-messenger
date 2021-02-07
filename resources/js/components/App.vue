@@ -1,39 +1,16 @@
 <template>
-    <div class='root'>
-        <nav>
-            <Navbar/>
-        </nav>
-        <aside>
-            <Sidebar/>
-        </aside>
-        <main>
-            <Chat/>
-        </main>
-    </div>
+<router-view/>
 </template>
 
 <script>
-import Navbar from './Navbar.vue'
-import Sidebar from './Sidebar.vue'
-import Chat from './Chat.vue'
 
 export default {
-    name: 'App',
-    components: {
-        Navbar,
-        Sidebar,
-        Chat
-    }
+    name: "App",
 }
 </script>
 
-<style lang='scss' scoped>
-.root {
-    width: 100%;
+<style lang="scss" scoped>
 
-    display: flex;
-    flex-wrap: wrap;
-}
 
 
 </style>

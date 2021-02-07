@@ -42,7 +42,6 @@
 </script>
 
 <style lang='scss' scoped>
-
 .user-chat {
     width: 100%;
     height: 100vh;
@@ -71,5 +70,4 @@
         width: 100%;
     }
 }
-
 </style>
