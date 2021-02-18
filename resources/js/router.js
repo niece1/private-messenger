@@ -17,7 +17,14 @@ const routes = [
     { 
         path: '/',
         name: 'Messenger',
-        component: Messenger
+        component: Messenger,
+        beforeEnter: (to, form, next) => {
+            axios.get('/api/athenticated').then(() => {
+                next();
+            }).catch(() => {
+                return next({ name: 'Login'});
+            });
+        }
     }
 ];
 

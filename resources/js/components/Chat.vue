@@ -6,8 +6,8 @@
             </figure>
             <div class="chat-user-list">
                 <div class="chat-user-info">
-                    <h5>Andrew Hovards</h5>
-                    <small>5 minutes ago</small>
+                    <h5 v-if="user">{{ user.name }}</h5>
+                    <small>5 minutes ago</small><p @click.prevent="logout">Logout</p>
                 </div>
                 <div class="chat-header-action">
                     <ul>
@@ -37,7 +37,23 @@
 
 <script>
     export default {
-        
+        data() {
+            return {
+                user: null
+            }
+        },
+        mounted(){
+            axios.get('/api/user').then(response => {
+                this.user = response.data;
+            });
+        },
+        methods: {
+            logout() {
+                axios.post('/api/logout').then(() => {
+                    this.$router.push({ name: 'Login' });
+                })
+            }
+        }
     }
 </script>
 
