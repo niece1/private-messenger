@@ -1,41 +1,34 @@
 <template>
-    <header>
-        <div class="menu-wrapper">
-            <div class="register-link">
-                <a href="#">Back</a>
-            </div>
-        </div>
-    </header>
     <main class="register">
         <div class="register-wrapper">
             <h3>iMessenger</h3>
             <h2>Please sign up</h2>
-            <p>Already have account?<a href="#">Login</a></p>
+            <p>Already have account?<router-link to='/login'>Login</router-link></p>
             <form>
                 <div class="form-group">
                     <div class="group-holder">
                         <input name="name" type="text" placeholder="Name" v-model="form.name">
                         <span class="symbol-input"><i class="far fa-user"></i></span>
-                        <span class="invalid-feedback" v-if="errors && errors.email">{{ errors.email[0] }}</span>
                     </div>
+                    <span class="invalid-feedback" v-if="errors && errors.name">{{ errors.name[0] }}</span>
                 </div>
                 <div class="form-group">
                     <div class="group-holder">
                         <input name="email" type="email" placeholder="Email" v-model="form.email">
                         <span class="symbol-input"><i class="far fa-envelope"></i></span>
-                        <span class="invalid-feedback" v-if="errors && errors.email">{{ errors.email[0] }}</span>
                     </div>
+                    <span class="invalid-feedback" v-if="errors && errors.email">{{ errors.email[0] }}</span>
                 </div>
                 <div class="form-group">
                     <div class="group-holder">
                         <input name="password" type="password" placeholder="Password" v-model="form.password">
                         <span class="symbol-input"><i class="fas fa-unlock-alt"></i></span>
-                        <span class="invalid-feedback" v-if="errors && errors.password">{{ errors.password[0] }}</span>
                     </div>
+                    <span class="invalid-feedback" v-if="errors && errors.password">{{ errors.password[0] }}</span>
                 </div>
                 <div class="form-group">
                 <div class="group-holder">
-                    <input type="password" name="password_confirmation" placeholder="Confirm password">
+                    <input type="password" name="password_confirmation" placeholder="Confirm password" v-model="form.password_confirmation">
                     <span class="symbol-input"><i class="fas fa-unlock-alt"></i></span>
                 </div>
                 </div>
@@ -52,44 +45,31 @@
         data() {
             return {
                 form: {
-                    name: "",
-                    email: "",
-                    password: ""
-                    
+                    name: '',
+                    email: '',
+                    password: '',
+                    password_confirmation: ''
                 },
                 errors: {}
             }
         },
         methods: {
             register() {
-                
-            }
+                axios.get('/sanctum/csrf-cookie').then(response => {
+                    axios.post('/api/register', this.form).then(response => {
+                        this.$router.push({ name: 'Messenger' });
+                    }).catch(error => {
+                        if (error.response.status === 422) {
+                            this.errors = error.response.data.errors;
+                        }
+                    });
+                });
+            } 
         }
     }
 </script>
 
-<style lang="scss" scoped>
-header {
-    width: 100%;
-    height: 75px;
-    .menu-wrapper {
-        width: 90%;
-        margin: auto;
-        .register-link {            
-            height: 75px;
-            line-height: 75px;
-            font-size: 1.6rem;
-            float: left;
-            a {
-                color: #000;
-                &:hover {
-                    color: #197593;
-                    transition: all 0.2s ease-in-out;
-                }
-            }
-        }
-    }
-}
+<style lang='scss' scoped>
 main.register {
     width: 100%;
     .register-wrapper {
@@ -154,10 +134,13 @@ main.register {
                         left: 1.5rem;
                         top: 30%;
                     }
-                    span.invalid-feedback {
-                        color: #ff9678;
-                        font-size: 1.2rem;
-                    }
+                }
+                span.invalid-feedback {
+                    color: #ff9678;
+                    font-size: 1.2rem;
+                    font-weight: 600;
+                    display: inline-block;
+                    padding-top: .5rem;
                 }
                 button.btn {
                     padding: 1.5rem 3.7rem 1.2rem;

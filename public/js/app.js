@@ -16302,7 +16302,31 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      user: null
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/api/user').then(function (response) {
+      _this.user = response.data;
+    });
+  },
+  methods: {
+    logout: function logout() {
+      var _this2 = this;
+
+      axios.post('/api/logout').then(function () {
+        _this2.$router.push({
+          name: 'Login'
+        });
+      });
+    }
+  }
+});
 
 /***/ }),
 
@@ -16351,14 +16375,29 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       form: {
-        email: "",
-        password: ""
+        email: '',
+        password: '',
+        remember: ''
       },
       errors: {}
     };
   },
   methods: {
-    login: function login() {}
+    login: function login() {
+      var _this = this;
+
+      axios.get('/sanctum/csrf-cookie').then(function (response) {
+        axios.post('/api/login', _this.form).then(function (response) {
+          _this.$router.push({
+            name: 'Messenger'
+          });
+        })["catch"](function (error) {
+          if (error.response.status === 422) {
+            _this.errors = error.response.data.errors;
+          }
+        });
+      });
+    }
   }
 });
 
@@ -16407,15 +16446,30 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       form: {
-        name: "",
-        email: "",
-        password: ""
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: ''
       },
       errors: {}
     };
   },
   methods: {
-    register: function register() {}
+    register: function register() {
+      var _this = this;
+
+      axios.get('/sanctum/csrf-cookie').then(function (response) {
+        axios.post('/api/register', _this.form).then(function (response) {
+          _this.$router.push({
+            name: 'Messenger'
+          });
+        })["catch"](function (error) {
+          if (error.response.status === 422) {
+            _this.errors = error.response.data.errors;
+          }
+        });
+      });
+    }
   }
 });
 
@@ -16466,13 +16520,51 @@ var _withId = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.withScopeId)("dat
 var _hoisted_1 = {
   "class": "user-chat"
 };
+var _hoisted_2 = {
+  "class": "chat-header"
+};
 
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"chat-header\" data-v-0d66c37a><figure class=\"avatar\" data-v-0d66c37a><img src=\"#\" alt=\"avatar\" data-v-0d66c37a></figure><div class=\"chat-user-list\" data-v-0d66c37a><div class=\"chat-user-info\" data-v-0d66c37a><h5 data-v-0d66c37a>Andrew Hovards</h5><small data-v-0d66c37a>5 minutes ago</small></div><div class=\"chat-header-action\" data-v-0d66c37a><ul data-v-0d66c37a><li data-v-0d66c37a></li></ul></div></div></div><div class=\"chat-body\" data-v-0d66c37a><div class=\"messages\" data-v-0d66c37a><div class=\"outbound-message\" data-v-0d66c37a></div><div class=\"inbound-message\" data-v-0d66c37a></div></div></div><div class=\"chat-footer\" data-v-0d66c37a><form data-v-0d66c37a><input id=\"search\" name=\"search\" type=\"text\" placeholder=\"Search\" data-v-0d66c37a><button type=\"submit\" data-v-0d66c37a>df</button></form></div>", 3);
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("figure", {
+  "class": "avatar"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
+  src: "#",
+  alt: "avatar"
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_4 = {
+  "class": "chat-user-list"
+};
+var _hoisted_5 = {
+  "class": "chat-user-info"
+};
+var _hoisted_6 = {
+  key: 0
+};
+
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("small", null, "5 minutes ago", -1
+/* HOISTED */
+);
+
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  "class": "chat-header-action"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("ul", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("li")])], -1
+/* HOISTED */
+);
+
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"chat-body\" data-v-0d66c37a><div class=\"messages\" data-v-0d66c37a><div class=\"outbound-message\" data-v-0d66c37a></div><div class=\"inbound-message\" data-v-0d66c37a></div></div></div><div class=\"chat-footer\" data-v-0d66c37a><form data-v-0d66c37a><input id=\"search\" name=\"search\" type=\"text\" placeholder=\"Search\" data-v-0d66c37a><button type=\"submit\" data-v-0d66c37a>df</button></form></div>", 2);
 
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)();
 
 var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [_hoisted_2]);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [$data.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("h5", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.user.name), 1
+  /* TEXT */
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", {
+    onClick: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+      return $options.logout && $options.logout.apply($options, arguments);
+    }, ["prevent"]))
+  }, "Logout")]), _hoisted_8])]), _hoisted_9]);
 });
 
 /***/ }),
@@ -16559,43 +16651,42 @@ var _withId = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.withScopeId)("dat
 
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.pushScopeId)("data-v-12f5395a");
 
-var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("header", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+var _hoisted_1 = {
   "class": "menu-wrapper"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
-  "class": "register-link"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
-  href: "#"
-}, "Sign up")])])], -1
-/* HOISTED */
-);
-
+};
 var _hoisted_2 = {
+  "class": "register-link"
+};
+
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Sign up");
+
+var _hoisted_4 = {
   "class": "login"
 };
-var _hoisted_3 = {
+var _hoisted_5 = {
   "class": "login-wrapper"
 };
 
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h3", null, "iMessenger", -1
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h3", null, "iMessenger", -1
 /* HOISTED */
 );
 
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h2", null, "Hello guys!", -1
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h2", null, "Hello guys!", -1
 /* HOISTED */
 );
 
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, "Please login into your account to get started", -1
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, "Please login into your account to get started", -1
 /* HOISTED */
 );
 
-var _hoisted_7 = {
+var _hoisted_9 = {
   "class": "form-group"
 };
-var _hoisted_8 = {
+var _hoisted_10 = {
   "class": "group-holder"
 };
 
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
   "class": "symbol-input"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "far fa-envelope"
@@ -16603,18 +16694,18 @@ var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 /* HOISTED */
 );
 
-var _hoisted_10 = {
+var _hoisted_12 = {
   key: 0,
   "class": "invalid-feedback"
 };
-var _hoisted_11 = {
+var _hoisted_13 = {
   "class": "form-group"
 };
-var _hoisted_12 = {
+var _hoisted_14 = {
   "class": "group-holder"
 };
 
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
   "class": "symbol-input"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "fas fa-unlock-alt"
@@ -16622,18 +16713,47 @@ var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 /* HOISTED */
 );
 
-var _hoisted_14 = {
+var _hoisted_16 = {
   key: 0,
   "class": "invalid-feedback"
 };
-var _hoisted_15 = {
+var _hoisted_17 = {
   "class": "form-group"
 };
+var _hoisted_18 = {
+  "class": "checkbox-container",
+  "for": "remember"
+};
+
+var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Remember me ");
+
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+  "class": "checkmark"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_21 = {
+  "class": "form-group"
+};
+
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Forgot password");
 
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)();
 
 var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("main", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [_hoisted_4, _hoisted_5, _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+  var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
+
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("header", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    to: "/register"
+  }, {
+    "default": _withId(function () {
+      return [_hoisted_3];
+    }),
+    _: 1
+    /* STABLE */
+
+  })])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("main", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [_hoisted_6, _hoisted_7, _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
     name: "email",
     type: "email",
     placeholder: "Email",
@@ -16642,9 +16762,9 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     })
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.email]]), _hoisted_9, $data.errors && $data.errors.email ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.email[0]), 1
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.email]]), _hoisted_11]), $data.errors && $data.errors.email ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.email[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
     name: "password",
     type: "password",
     placeholder: "Password",
@@ -16653,15 +16773,36 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     })
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.password]]), _hoisted_13, $data.errors && $data.errors.password ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.password[0]), 1
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.password]]), _hoisted_15]), $data.errors && $data.errors.password ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.password[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+    type: "checkbox",
+    name: "remember",
+    id: "remember",
+    "class": "checkbox",
+    value: "1",
+    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+      return $data.form.remember = $event;
+    })
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.form.remember]]), _hoisted_20])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     "class": "btn",
     type: "submit",
-    onClick: _cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+    onClick: _cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.login && $options.login.apply($options, arguments);
     }, ["prevent"]))
-  }, "Login")])])])])], 64
+  }, "Login"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    to: "",
+    "class": "reset-link"
+  }, {
+    "default": _withId(function () {
+      return [_hoisted_22];
+    }),
+    _: 1
+    /* STABLE */
+
+  })])])])])], 64
   /* STABLE_FRAGMENT */
   );
 });
@@ -16722,36 +16863,24 @@ var _withId = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.withScopeId)("dat
 
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.pushScopeId)("data-v-3563ad7c");
 
-var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("header", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
-  "class": "menu-wrapper"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
-  "class": "register-link"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
-  href: "#"
-}, "Back")])])], -1
-/* HOISTED */
-);
-
-var _hoisted_2 = {
+var _hoisted_1 = {
   "class": "register"
 };
-var _hoisted_3 = {
+var _hoisted_2 = {
   "class": "register-wrapper"
 };
 
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h3", null, "iMessenger", -1
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h3", null, "iMessenger", -1
 /* HOISTED */
 );
 
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h2", null, "Please sign up", -1
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h2", null, "Please sign up", -1
 /* HOISTED */
 );
 
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Already have account?"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
-  href: "#"
-}, "Login")], -1
-/* HOISTED */
-);
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Already have account?");
+
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Login");
 
 var _hoisted_7 = {
   "class": "form-group"
@@ -16810,17 +16939,40 @@ var _hoisted_18 = {
   key: 0,
   "class": "invalid-feedback"
 };
-
-var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"form-group\" data-v-3563ad7c><div class=\"group-holder\" data-v-3563ad7c><input type=\"password\" name=\"password_confirmation\" placeholder=\"Confirm password\" data-v-3563ad7c><span class=\"symbol-input\" data-v-3563ad7c><i class=\"fas fa-unlock-alt\" data-v-3563ad7c></i></span></div></div>", 1);
-
+var _hoisted_19 = {
+  "class": "form-group"
+};
 var _hoisted_20 = {
+  "class": "group-holder"
+};
+
+var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+  "class": "symbol-input"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+  "class": "fas fa-unlock-alt"
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_22 = {
   "class": "form-group"
 };
 
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)();
 
 var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("main", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [_hoisted_4, _hoisted_5, _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+  var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
+
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("main", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [_hoisted_3, _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    to: "/login"
+  }, {
+    "default": _withId(function () {
+      return [_hoisted_6];
+    }),
+    _: 1
+    /* STABLE */
+
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
     name: "name",
     type: "text",
     placeholder: "Name",
@@ -16829,9 +16981,9 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     })
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.name]]), _hoisted_9, $data.errors && $data.errors.email ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.email[0]), 1
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.name]]), _hoisted_9]), $data.errors && $data.errors.name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.name[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
     name: "email",
     type: "email",
     placeholder: "Email",
@@ -16840,9 +16992,9 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     })
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.email]]), _hoisted_13, $data.errors && $data.errors.email ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.email[0]), 1
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.email]]), _hoisted_13]), $data.errors && $data.errors.email ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.email[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
     name: "password",
     type: "password",
     placeholder: "Password",
@@ -16851,17 +17003,24 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     })
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.password]]), _hoisted_17, $data.errors && $data.errors.password ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.password[0]), 1
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.password]]), _hoisted_17]), $data.errors && $data.errors.password ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.password[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+    type: "password",
+    name: "password_confirmation",
+    placeholder: "Confirm password",
+    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+      return $data.form.password_confirmation = $event;
+    })
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.password_confirmation]]), _hoisted_21])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     "class": "btn",
     type: "submit",
-    onClick: _cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+    onClick: _cache[5] || (_cache[5] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.register && $options.register.apply($options, arguments);
     }, ["prevent"]))
-  }, "sign up")])])])])], 64
-  /* STABLE_FRAGMENT */
-  );
+  }, "sign up")])])])]);
 });
 
 /***/ }),
@@ -16905,6 +17064,8 @@ window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+axios.defaults.withCredentials = true;
+window.axios.defaults.baseURL = "http://127.0.0.1:8088";
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -16951,7 +17112,16 @@ var routes = [{
 }, {
   path: '/',
   name: 'Messenger',
-  component: _views_Messenger_vue__WEBPACK_IMPORTED_MODULE_2__.default
+  component: _views_Messenger_vue__WEBPACK_IMPORTED_MODULE_2__.default,
+  beforeEnter: function beforeEnter(to, form, next) {
+    axios.get('/api/athenticated').then(function () {
+      next();
+    })["catch"](function () {
+      return next({
+        name: 'Login'
+      });
+    });
+  }
 }];
 var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_3__.createRouter)({
   history: (0,vue_router__WEBPACK_IMPORTED_MODULE_3__.createWebHistory)(),
@@ -17050,7 +17220,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "header[data-v-12f5395a] {\n  width: 100%;\n  height: 75px;\n}\nheader .menu-wrapper[data-v-12f5395a] {\n  width: 90%;\n  margin: auto;\n}\nheader .menu-wrapper .register-link[data-v-12f5395a] {\n  height: 75px;\n  line-height: 75px;\n  font-size: 1.6rem;\n  float: right;\n}\nheader .menu-wrapper .register-link a[data-v-12f5395a] {\n  color: #000;\n}\nheader .menu-wrapper .register-link a[data-v-12f5395a]:hover {\n  color: #197593;\n  transition: all 0.2s ease-in-out;\n}\nmain.login[data-v-12f5395a] {\n  width: 100%;\n}\nmain.login .login-wrapper[data-v-12f5395a] {\n  width: 90%;\n  margin: auto;\n  text-align: center;\n}\nmain.login .login-wrapper h2[data-v-12f5395a] {\n  padding: 3rem 0 1.5rem;\n  font-weight: normal;\n}\nmain.login .login-wrapper h3[data-v-12f5395a] {\n  color: #197593;\n  padding: 7rem 0 0 0;\n}\nmain.login .login-wrapper form[data-v-12f5395a] {\n  background-color: #fff;\n  width: 40%;\n  margin: auto;\n}\n@media screen and (max-width: 1200px) {\nmain.login .login-wrapper form[data-v-12f5395a] {\n    width: 80%;\n}\n}\n@media screen and (max-width: 800px) {\nmain.login .login-wrapper form[data-v-12f5395a] {\n    width: 90%;\n}\n}\n@media screen and (max-width: 600px) {\nmain.login .login-wrapper form[data-v-12f5395a] {\n    width: 100%;\n}\n}\nmain.login .login-wrapper form .form-group[data-v-12f5395a] {\n  margin: 3rem 0;\n  text-align: left;\n}\nmain.login .login-wrapper form .form-group .group-holder[data-v-12f5395a] {\n  position: relative;\n}\nmain.login .login-wrapper form .form-group .group-holder input[data-v-12f5395a] {\n  font-size: 1.6rem;\n  border: 2px solid #ebebeb;\n  border-radius: 0.5rem;\n  padding: 1.4rem 0 1.4rem 5rem;\n  width: 100%;\n  display: block;\n}\nmain.login .login-wrapper form .form-group .group-holder input[data-v-12f5395a]::-moz-placeholder {\n  font-size: 1.6rem;\n  color: #4e4e4e;\n  opacity: 1;\n}\nmain.login .login-wrapper form .form-group .group-holder input[data-v-12f5395a]:-ms-input-placeholder {\n  font-size: 1.6rem;\n  color: #4e4e4e;\n  opacity: 1;\n}\nmain.login .login-wrapper form .form-group .group-holder input[data-v-12f5395a]::placeholder {\n  font-size: 1.6rem;\n  color: #4e4e4e;\n  opacity: 1;\n}\nmain.login .login-wrapper form .form-group .group-holder input[data-v-12f5395a]:focus {\n  outline: none;\n  border: 2px solid #fff;\n  transition: all 0.2s ease-in-out;\n  box-shadow: 0 0 0 0.45rem rgba(25, 117, 147, 0.35);\n}\nmain.login .login-wrapper form .form-group .group-holder span.symbol-input[data-v-12f5395a] {\n  color: #ebebeb;\n  font-size: 2rem;\n  position: absolute;\n  left: 1.5rem;\n  top: 30%;\n}\nmain.login .login-wrapper form .form-group .group-holder span.invalid-feedback[data-v-12f5395a] {\n  color: #ff9678;\n  font-size: 1.2rem;\n}\nmain.login .login-wrapper form .form-group button.btn[data-v-12f5395a] {\n  padding: 1.5rem 3.7rem 1.2rem;\n  cursor: pointer;\n  font-size: 1.2rem;\n  text-transform: uppercase;\n  outline: none;\n  letter-spacing: 1.5px;\n  border: 1px solid transparent;\n  background-color: #197593;\n  color: #fff;\n  font-weight: 600;\n}\nmain.login .login-wrapper form .form-group button.btn[data-v-12f5395a]:hover {\n  box-shadow: 0 1px 15px 0 rgba(25, 117, 147, 0.75);\n  transition: all 0.2s ease-in-out;\n}\nmain.login .login-wrapper form .form-group button.btn[data-v-12f5395a]:not(:hover) {\n  box-shadow: none;\n  transition: all 0.2s ease-in-out;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "header[data-v-12f5395a] {\n  width: 100%;\n  height: 75px;\n}\nheader .menu-wrapper[data-v-12f5395a] {\n  width: 90%;\n  margin: auto;\n}\nheader .menu-wrapper .register-link[data-v-12f5395a] {\n  height: 75px;\n  line-height: 75px;\n  font-size: 1.6rem;\n  float: right;\n}\nheader .menu-wrapper .register-link a[data-v-12f5395a] {\n  color: #000;\n}\nheader .menu-wrapper .register-link a[data-v-12f5395a]:hover {\n  color: #197593;\n  transition: all 0.2s ease-in-out;\n}\nmain.login[data-v-12f5395a] {\n  width: 100%;\n}\nmain.login .login-wrapper[data-v-12f5395a] {\n  width: 90%;\n  margin: auto;\n  text-align: center;\n}\nmain.login .login-wrapper h2[data-v-12f5395a] {\n  padding: 3rem 0 1.5rem;\n  font-weight: normal;\n}\nmain.login .login-wrapper h3[data-v-12f5395a] {\n  color: #197593;\n  padding: 7rem 0 0 0;\n}\nmain.login .login-wrapper form[data-v-12f5395a] {\n  background-color: #fff;\n  width: 40%;\n  margin: auto;\n}\n@media screen and (max-width: 1200px) {\nmain.login .login-wrapper form[data-v-12f5395a] {\n    width: 80%;\n}\n}\n@media screen and (max-width: 800px) {\nmain.login .login-wrapper form[data-v-12f5395a] {\n    width: 90%;\n}\n}\n@media screen and (max-width: 600px) {\nmain.login .login-wrapper form[data-v-12f5395a] {\n    width: 100%;\n}\n}\nmain.login .login-wrapper form .form-group[data-v-12f5395a] {\n  margin: 3rem 0;\n  text-align: left;\n}\nmain.login .login-wrapper form .form-group .group-holder[data-v-12f5395a] {\n  position: relative;\n}\nmain.login .login-wrapper form .form-group .group-holder input[data-v-12f5395a] {\n  font-size: 1.6rem;\n  border: 2px solid #ebebeb;\n  border-radius: 0.5rem;\n  padding: 1.4rem 0 1.4rem 5rem;\n  width: 100%;\n  display: block;\n}\nmain.login .login-wrapper form .form-group .group-holder input[data-v-12f5395a]::-moz-placeholder {\n  font-size: 1.6rem;\n  color: #4e4e4e;\n  opacity: 1;\n}\nmain.login .login-wrapper form .form-group .group-holder input[data-v-12f5395a]:-ms-input-placeholder {\n  font-size: 1.6rem;\n  color: #4e4e4e;\n  opacity: 1;\n}\nmain.login .login-wrapper form .form-group .group-holder input[data-v-12f5395a]::placeholder {\n  font-size: 1.6rem;\n  color: #4e4e4e;\n  opacity: 1;\n}\nmain.login .login-wrapper form .form-group .group-holder input[data-v-12f5395a]:focus {\n  outline: none;\n  border: 2px solid #fff;\n  transition: all 0.2s ease-in-out;\n  box-shadow: 0 0 0 0.45rem rgba(25, 117, 147, 0.35);\n}\nmain.login .login-wrapper form .form-group .group-holder span.symbol-input[data-v-12f5395a] {\n  color: #ebebeb;\n  font-size: 2rem;\n  position: absolute;\n  left: 1.5rem;\n  top: 30%;\n}\nmain.login .login-wrapper form .form-group span.invalid-feedback[data-v-12f5395a] {\n  color: #ff9678;\n  font-size: 1.2rem;\n  font-weight: 600;\n  display: inline-block;\n  padding-top: 0.5rem;\n}\nmain.login .login-wrapper form .form-group .checkbox-container[data-v-12f5395a] {\n  display: inline-block;\n  position: relative;\n  padding-left: 30px;\n  font-size: 1.4rem;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\nmain.login .login-wrapper form .form-group .checkbox-container input[data-v-12f5395a] {\n  position: absolute;\n  opacity: 0;\n  cursor: pointer;\n  height: 0;\n  width: 0;\n}\nmain.login .login-wrapper form .form-group .checkbox-container input:checked ~ .checkmark[data-v-12f5395a] {\n  background-color: #197593;\n}\nmain.login .login-wrapper form .form-group .checkbox-container input:checked ~ .checkmark[data-v-12f5395a]:after {\n  display: block;\n}\nmain.login .login-wrapper form .form-group .checkbox-container .checkmark[data-v-12f5395a] {\n  position: absolute;\n  top: 0;\n  left: 0;\n  height: 1.8rem;\n  width: 1.8rem;\n  background-color: #ebebeb;\n}\nmain.login .login-wrapper form .form-group .checkbox-container .checkmark[data-v-12f5395a]:after {\n  content: \"\";\n  position: absolute;\n  display: none;\n}\nmain.login .login-wrapper form .form-group .checkbox-container .checkmark[data-v-12f5395a]:after {\n  width: 5px;\n  height: 10px;\n  left: 5px;\n  top: 1px;\n  border: solid white;\n  border-width: 0 3px 3px 0;\n  transform: rotate(45deg);\n}\nmain.login .login-wrapper form .form-group button.btn[data-v-12f5395a] {\n  padding: 1.5rem 3.7rem 1.2rem;\n  cursor: pointer;\n  font-size: 1.2rem;\n  text-transform: uppercase;\n  outline: none;\n  letter-spacing: 1.5px;\n  border: 1px solid transparent;\n  background-color: #197593;\n  color: #fff;\n  font-weight: 600;\n}\nmain.login .login-wrapper form .form-group button.btn[data-v-12f5395a]:hover {\n  box-shadow: 0 1px 15px 0 rgba(25, 117, 147, 0.75);\n  transition: all 0.2s ease-in-out;\n}\nmain.login .login-wrapper form .form-group button.btn[data-v-12f5395a]:not(:hover) {\n  box-shadow: none;\n  transition: all 0.2s ease-in-out;\n}\nmain.login .login-wrapper form .form-group a.reset-link[data-v-12f5395a] {\n  font-size: 1.6rem;\n  color: #197593;\n  margin-left: 2rem;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -17098,7 +17268,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "header[data-v-3563ad7c] {\n  width: 100%;\n  height: 75px;\n}\nheader .menu-wrapper[data-v-3563ad7c] {\n  width: 90%;\n  margin: auto;\n}\nheader .menu-wrapper .register-link[data-v-3563ad7c] {\n  height: 75px;\n  line-height: 75px;\n  font-size: 1.6rem;\n  float: left;\n}\nheader .menu-wrapper .register-link a[data-v-3563ad7c] {\n  color: #000;\n}\nheader .menu-wrapper .register-link a[data-v-3563ad7c]:hover {\n  color: #197593;\n  transition: all 0.2s ease-in-out;\n}\nmain.register[data-v-3563ad7c] {\n  width: 100%;\n}\nmain.register .register-wrapper[data-v-3563ad7c] {\n  width: 90%;\n  margin: auto;\n  text-align: center;\n}\nmain.register .register-wrapper h2[data-v-3563ad7c] {\n  padding: 3rem 0 1.5rem;\n  font-weight: normal;\n}\nmain.register .register-wrapper h3[data-v-3563ad7c] {\n  color: #197593;\n  padding: 7rem 0 0 0;\n}\nmain.register .register-wrapper p a[data-v-3563ad7c] {\n  margin-left: 1rem;\n  color: #197593;\n}\nmain.register .register-wrapper form[data-v-3563ad7c] {\n  background-color: #fff;\n  width: 40%;\n  margin: auto;\n}\n@media screen and (max-width: 1200px) {\nmain.register .register-wrapper form[data-v-3563ad7c] {\n    width: 80%;\n}\n}\n@media screen and (max-width: 800px) {\nmain.register .register-wrapper form[data-v-3563ad7c] {\n    width: 90%;\n}\n}\n@media screen and (max-width: 600px) {\nmain.register .register-wrapper form[data-v-3563ad7c] {\n    width: 100%;\n}\n}\nmain.register .register-wrapper form .form-group[data-v-3563ad7c] {\n  margin: 3rem 0;\n  text-align: left;\n}\nmain.register .register-wrapper form .form-group .group-holder[data-v-3563ad7c] {\n  position: relative;\n}\nmain.register .register-wrapper form .form-group .group-holder input[data-v-3563ad7c] {\n  font-size: 1.6rem;\n  border: 2px solid #ebebeb;\n  border-radius: 0.5rem;\n  padding: 1.4rem 0 1.4rem 5rem;\n  width: 100%;\n  display: block;\n}\nmain.register .register-wrapper form .form-group .group-holder input[data-v-3563ad7c]::-moz-placeholder {\n  font-size: 1.6rem;\n  color: #4e4e4e;\n  opacity: 1;\n}\nmain.register .register-wrapper form .form-group .group-holder input[data-v-3563ad7c]:-ms-input-placeholder {\n  font-size: 1.6rem;\n  color: #4e4e4e;\n  opacity: 1;\n}\nmain.register .register-wrapper form .form-group .group-holder input[data-v-3563ad7c]::placeholder {\n  font-size: 1.6rem;\n  color: #4e4e4e;\n  opacity: 1;\n}\nmain.register .register-wrapper form .form-group .group-holder input[data-v-3563ad7c]:focus {\n  outline: none;\n  border: 2px solid #fff;\n  transition: all 0.2s ease-in-out;\n  box-shadow: 0 0 0 0.45rem rgba(25, 117, 147, 0.35);\n}\nmain.register .register-wrapper form .form-group .group-holder span.symbol-input[data-v-3563ad7c] {\n  color: #ebebeb;\n  font-size: 2rem;\n  position: absolute;\n  left: 1.5rem;\n  top: 30%;\n}\nmain.register .register-wrapper form .form-group .group-holder span.invalid-feedback[data-v-3563ad7c] {\n  color: #ff9678;\n  font-size: 1.2rem;\n}\nmain.register .register-wrapper form .form-group button.btn[data-v-3563ad7c] {\n  padding: 1.5rem 3.7rem 1.2rem;\n  cursor: pointer;\n  font-size: 1.2rem;\n  text-transform: uppercase;\n  outline: none;\n  letter-spacing: 1.5px;\n  border: 1px solid transparent;\n  background-color: #197593;\n  color: #fff;\n  font-weight: 600;\n}\nmain.register .register-wrapper form .form-group button.btn[data-v-3563ad7c]:hover {\n  box-shadow: 0 1px 15px 0 rgba(25, 117, 147, 0.75);\n  transition: all 0.2s ease-in-out;\n}\nmain.register .register-wrapper form .form-group button.btn[data-v-3563ad7c]:not(:hover) {\n  box-shadow: none;\n  transition: all 0.2s ease-in-out;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "main.register[data-v-3563ad7c] {\n  width: 100%;\n}\nmain.register .register-wrapper[data-v-3563ad7c] {\n  width: 90%;\n  margin: auto;\n  text-align: center;\n}\nmain.register .register-wrapper h2[data-v-3563ad7c] {\n  padding: 3rem 0 1.5rem;\n  font-weight: normal;\n}\nmain.register .register-wrapper h3[data-v-3563ad7c] {\n  color: #197593;\n  padding: 7rem 0 0 0;\n}\nmain.register .register-wrapper p a[data-v-3563ad7c] {\n  margin-left: 1rem;\n  color: #197593;\n}\nmain.register .register-wrapper form[data-v-3563ad7c] {\n  background-color: #fff;\n  width: 40%;\n  margin: auto;\n}\n@media screen and (max-width: 1200px) {\nmain.register .register-wrapper form[data-v-3563ad7c] {\n    width: 80%;\n}\n}\n@media screen and (max-width: 800px) {\nmain.register .register-wrapper form[data-v-3563ad7c] {\n    width: 90%;\n}\n}\n@media screen and (max-width: 600px) {\nmain.register .register-wrapper form[data-v-3563ad7c] {\n    width: 100%;\n}\n}\nmain.register .register-wrapper form .form-group[data-v-3563ad7c] {\n  margin: 3rem 0;\n  text-align: left;\n}\nmain.register .register-wrapper form .form-group .group-holder[data-v-3563ad7c] {\n  position: relative;\n}\nmain.register .register-wrapper form .form-group .group-holder input[data-v-3563ad7c] {\n  font-size: 1.6rem;\n  border: 2px solid #ebebeb;\n  border-radius: 0.5rem;\n  padding: 1.4rem 0 1.4rem 5rem;\n  width: 100%;\n  display: block;\n}\nmain.register .register-wrapper form .form-group .group-holder input[data-v-3563ad7c]::-moz-placeholder {\n  font-size: 1.6rem;\n  color: #4e4e4e;\n  opacity: 1;\n}\nmain.register .register-wrapper form .form-group .group-holder input[data-v-3563ad7c]:-ms-input-placeholder {\n  font-size: 1.6rem;\n  color: #4e4e4e;\n  opacity: 1;\n}\nmain.register .register-wrapper form .form-group .group-holder input[data-v-3563ad7c]::placeholder {\n  font-size: 1.6rem;\n  color: #4e4e4e;\n  opacity: 1;\n}\nmain.register .register-wrapper form .form-group .group-holder input[data-v-3563ad7c]:focus {\n  outline: none;\n  border: 2px solid #fff;\n  transition: all 0.2s ease-in-out;\n  box-shadow: 0 0 0 0.45rem rgba(25, 117, 147, 0.35);\n}\nmain.register .register-wrapper form .form-group .group-holder span.symbol-input[data-v-3563ad7c] {\n  color: #ebebeb;\n  font-size: 2rem;\n  position: absolute;\n  left: 1.5rem;\n  top: 30%;\n}\nmain.register .register-wrapper form .form-group span.invalid-feedback[data-v-3563ad7c] {\n  color: #ff9678;\n  font-size: 1.2rem;\n  font-weight: 600;\n  display: inline-block;\n  padding-top: 0.5rem;\n}\nmain.register .register-wrapper form .form-group button.btn[data-v-3563ad7c] {\n  padding: 1.5rem 3.7rem 1.2rem;\n  cursor: pointer;\n  font-size: 1.2rem;\n  text-transform: uppercase;\n  outline: none;\n  letter-spacing: 1.5px;\n  border: 1px solid transparent;\n  background-color: #197593;\n  color: #fff;\n  font-weight: 600;\n}\nmain.register .register-wrapper form .form-group button.btn[data-v-3563ad7c]:hover {\n  box-shadow: 0 1px 15px 0 rgba(25, 117, 147, 0.75);\n  transition: all 0.2s ease-in-out;\n}\nmain.register .register-wrapper form .form-group button.btn[data-v-3563ad7c]:not(:hover) {\n  box-shadow: none;\n  transition: all 0.2s ease-in-out;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
