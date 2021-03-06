@@ -9,4 +9,11 @@ class Chat extends Model
 {
     use HasFactory;
     
+    /**
+     * Get message record associated with the specified chat.
+     */
+    public function message()
+    {
+        return $this->belongsTo(Message::class);
+    }
 }

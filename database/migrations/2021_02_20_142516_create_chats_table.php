@@ -15,7 +15,7 @@ class CreateChatsTable extends Migration
     {
         Schema::create('chats', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('message_id')->references('id')->on('messages')->onDelete('set null');;
+            $table->unsignedInteger('message_id')->references('id')->on('messages')->onDelete('set null');
             $table->unsignedInteger('seance_id')->references('id')->on('seances')->onDelete('set null');
             $table->unsignedInteger('user_id')->references('id')->on('users')->onDelete('set null');
             $table->dateTime('read_at')->nullable();
