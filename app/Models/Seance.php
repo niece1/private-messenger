@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Seance extends Model
 {
     use HasFactory;
-    
+
     /**
      * Get messages associated with the specified seance.
      */
@@ -16,7 +16,7 @@ class Seance extends Model
     {
         return $this->hasMany(Message::class);
     }
-    
+
     /**
      * Get all of the chats for the seance.
      */
