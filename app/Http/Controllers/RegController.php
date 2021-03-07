@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+
 class RegController extends Controller
 {
     public function index(Request $request)
@@ -18,11 +19,11 @@ class RegController extends Controller
             'password' => ['required']
         ]);
 
-        if (Auth::attempt($request->only('email', 'password'))){
+        if (Auth::attempt($request->only('email', 'password'))) {
             return response()->json(Auth::user(), 200);
         }
         throw ValidationException::withMessages([
-            'email' =>['The provided credentials are incorect.']
+            'email' => ['The provided credentials are incorect.']
         ]);
     }
 }
