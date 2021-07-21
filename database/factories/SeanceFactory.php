@@ -23,9 +23,9 @@ class SeanceFactory extends Factory
     public function definition()
     {
         return [
-            'user1_id' => rand(1, 5),
-            'user2_id' => rand(6, 10),
-            'blocked' => fn () => false,
+            'user1_id' => 1,
+            'user2_id' => 2,
+            'blocked' => false,
             'blocked_by' => null,
         ];
     }

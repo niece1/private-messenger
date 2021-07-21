@@ -15,8 +15,8 @@ class CreateSeancesTable extends Migration
     {
         Schema::create('seances', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user1_id');
-            $table->unsignedInteger('user2_id');
+            $table->unsignedInteger('user1_id')->unique();
+            $table->unsignedInteger('user2_id')->unique();
             $table->boolean('blocked')->default(0);
             $table->unsignedInteger('blocked_by')->nullable();
             $table->timestamps();

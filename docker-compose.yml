@@ -1,7 +1,4 @@
 version: '3.7'
-
-networks:
-    laravel:
         
 services:
     php:
@@ -12,10 +9,10 @@ services:
             context: .
             dockerfile: Dockerfile
         container_name: php
+        volumes:
+            - .:/var/www/html
         ports:
             - 9000:9000
-        volumes:
-            - .:/var/www/html:delegated
         restart: unless-stopped
         networks:
             - laravel
@@ -98,3 +95,6 @@ services:
             - 8025:8025
         networks:
             - laravel
+
+networks:
+    laravel:
